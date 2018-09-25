@@ -1,9 +1,6 @@
 import tkinter as tk 
 import tkinter.messagebox as msgbox
 import random
-#la prima classe creata è quella delle carte
-#Questa è composta da seme e valore. 
-# __repr__ modifica la visualizzazione delle cart in base alla funzione print 
 
 class Card: 
 	def __init__(self, suit,value): 
@@ -11,11 +8,6 @@ class Card:
 		self.value = value
 	def __repr__(self):
 		return " of " .join((self.value, self.suit))
-#la seconda classe è il deck (mazzo) delle carte 
-#Essendo francesi ci saranno 52 carte 
-#Inoltre devo definire la funzione per "ammischiarle" 
-#Oltre a questo il mazzo deve tenere in considerazione quando le carte venogno rimosse
-
 class Deck: 
 	def __init__(self):
 		self.cards = [Card(m,n) for m in ["Spades","Clubs", "Hearts", "Diamonds"] for n in ["A","2","3","4","5","6","7","8","9","10","J","Q","K"]]
@@ -25,15 +17,6 @@ class Deck:
 	def deal(self):
 		if len(self.cards)>1:
 			return self.cards.pop(0)
-#l'istanza deck ci permette di avere una collezione di ogni possibile carta
-#Questo è stato fatto utilizzando una "list comprehension" che contiene le liste di ogni seme e valore 
-#shuffle è una funzione della libreria random che abbiamo precedentemente caricato
-
-#la classe hand (mano) è un contenitore di carte simile alla classe Deck 
-#La mano avrà associato un valore definito dalle regole del gioco
-
-#E' fondamentale visto che parliamo di Blackjack fare in modo che il banco mostri una carta 
-
 class Hand: 
 	def __init__(self, dealer=False): 
 		self.dealer = dealer 
@@ -41,8 +24,6 @@ class Hand:
 		self.value = 0
 	def add_card(self, card):	 
 		self.cards.append(card)
-#Simile alla classe Deck, la classe Hand conserva le carte attraverso una lista di istanze "Card"
-#Adesso è necessario definire la funzione per il calcolo del valore di una mano
 def calculate_value(self):
 		self.value=0
 		has_ace = False 
@@ -70,9 +51,6 @@ def display (self):
 		for card in self.cards:
 			print(card)
 		print("Value:", self.get_value())
-		
-#Avendo scritto l'ossatura del gioco e dei dati necessari si può sviluppare il ciclo di gioco attraverso la creazione di una classe specifica "Game" 
-
 class Game:
 	def __init__(self):
 		playing = True 
@@ -94,12 +72,9 @@ class Game:
 			print()
 			print("Dealer's hand is:")
 			self.dealer_hand.display()
-#E' necessario adesso descrivere un ciclo che continuerà fino a quando non sarà  deciso un vincitore
 game_over = False 
 while not game_over:
 	player_has_blackjack, dealer_has_blackjack= self.check_for_blackjack()
-#Devo conoscere quale giocatore ha blackjack e questo lo faccio con un booleano
-#sia per il giocatore che per il banco 
 def check_for_blackjack(self): 
 	player=False
 	dealer=False 
@@ -112,7 +87,6 @@ if player_has_blackjack or dealer_has_blackjack:
 	game_over = True
 	self.show_blackjack_results(player_has_blackjack, dealer_has_blackjack)
 	continue 	
-#Per rivelare il vincitore sullo schermo bisogna costruire un'altra funzione 
 
 def show_blackjack_results(self, player_has_blackjack,dealer_has_blackjack):
 	if player_hand and dealer_has_blackjack:
@@ -122,12 +96,10 @@ def show_blackjack_results(self, player_has_blackjack,dealer_has_blackjack):
 	elif dealer_has_blackjack:
 		print("Dealer has blackjack! Dealer wins!")
 		
-#Il giocatore deve poter scegliere se aggiungere altre carte alla mano o se conservare quelle che ha attualmente
 choice= input("Please choose [Hit/Strick]").lower()
 while choice not in ["h","s","hit","stick"]:
 	choice =input("Please enter 'hit' or 'stick' (or H/S)").lower()
 	
-#se non viene riconosciuto l'input inserito richiediamo di reinserire l'input fino a quando non è corretto
 
 if choice in ['hit','h']:
 	self.player_hand.add_card(self.deck.deal())
